@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="ipad11_0rounded" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Sean_Fiverr" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TC6-4W-qxV">
+                                <rect key="frame" x="0.0" y="24" width="834" height="358"/>
+                                <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="60"/>
+                                <state key="normal" title="Add New Recording">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="newRecordingPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qIV-YG-0D3"/>
+                                </connections>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ffh-OE-xCL">
+                                <rect key="frame" x="0.0" y="338" width="834" height="836"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="cell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="nYa-Rt-Z9G">
+                                        <rect key="frame" x="0.0" y="28" width="834" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nYa-Rt-Z9G" id="3I1-o2-RDe">
+                                            <rect key="frame" x="0.0" y="0.0" width="834" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bl3-ep-P7e" userLabel="Start Recording View">
+                                <rect key="frame" x="0.0" y="24" width="834" height="358"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wOk-Oj-nhi">
+                                        <rect key="frame" x="83.5" y="250.5" width="667" height="90"/>
+                                        <color key="backgroundColor" red="1" green="0.83234566450000003" blue="0.47320586440000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                        <state key="normal" title="Start Recording"/>
+                                        <connections>
+                                            <action selector="startRecordingPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="G4D-I9-uG5"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recording Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9JF-PZ-lAF">
+                                        <rect key="frame" x="0.0" y="0.0" width="834" height="89.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Recording Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5KZ-7a-OfS">
+                                        <rect key="frame" x="83.5" y="134.5" width="667" height="89.5"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" red="0.47684186699999997" green="0.50480759139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="wOk-Oj-nhi" firstAttribute="centerX" secondItem="bl3-ep-P7e" secondAttribute="centerX" id="524-yN-CAb"/>
+                                    <constraint firstItem="wOk-Oj-nhi" firstAttribute="height" secondItem="5KZ-7a-OfS" secondAttribute="height" id="Aod-I3-xb5"/>
+                                    <constraint firstItem="5KZ-7a-OfS" firstAttribute="centerX" secondItem="bl3-ep-P7e" secondAttribute="centerX" id="CzN-Ph-LdX"/>
+                                    <constraint firstItem="5KZ-7a-OfS" firstAttribute="height" secondItem="bl3-ep-P7e" secondAttribute="height" multiplier="0.25" id="IfL-G8-dsn"/>
+                                    <constraint firstItem="wOk-Oj-nhi" firstAttribute="centerY" secondItem="bl3-ep-P7e" secondAttribute="centerY" multiplier="1.65" id="J0t-va-Av5"/>
+                                    <constraint firstItem="9JF-PZ-lAF" firstAttribute="leading" secondItem="bl3-ep-P7e" secondAttribute="leading" id="JGv-le-mqp"/>
+                                    <constraint firstItem="wOk-Oj-nhi" firstAttribute="width" secondItem="5KZ-7a-OfS" secondAttribute="width" id="VOY-mi-ASz"/>
+                                    <constraint firstItem="9JF-PZ-lAF" firstAttribute="top" secondItem="bl3-ep-P7e" secondAttribute="top" id="Zl2-Cd-fTT"/>
+                                    <constraint firstItem="5KZ-7a-OfS" firstAttribute="width" secondItem="bl3-ep-P7e" secondAttribute="width" multiplier="0.8" id="eeu-qd-MMv"/>
+                                    <constraint firstAttribute="trailing" secondItem="9JF-PZ-lAF" secondAttribute="trailing" id="p8h-bk-mIj"/>
+                                    <constraint firstItem="9JF-PZ-lAF" firstAttribute="height" secondItem="bl3-ep-P7e" secondAttribute="height" multiplier="0.25" id="sm9-kK-CIG"/>
+                                    <constraint firstItem="5KZ-7a-OfS" firstAttribute="centerY" secondItem="bl3-ep-P7e" secondAttribute="centerY" id="vSK-cV-yqD"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="bl3-ep-P7e" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="6nl-xb-tdr"/>
+                            <constraint firstItem="Ffh-OE-xCL" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="APX-Za-pC3"/>
+                            <constraint firstItem="bl3-ep-P7e" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Aki-4c-Myw"/>
+                            <constraint firstItem="Ffh-OE-xCL" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="E0u-Ds-DqX"/>
+                            <constraint firstItem="Ffh-OE-xCL" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.7" id="JBi-ls-Hi2"/>
+                            <constraint firstItem="TC6-4W-qxV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="XCq-v0-rFa"/>
+                            <constraint firstItem="TC6-4W-qxV" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.3" id="bNv-eE-EdV"/>
+                            <constraint firstItem="Ffh-OE-xCL" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="bOK-I6-tFi"/>
+                            <constraint firstItem="TC6-4W-qxV" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="hTg-iF-daU"/>
+                            <constraint firstItem="TC6-4W-qxV" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="jgk-Ft-gzZ"/>
+                            <constraint firstItem="bl3-ep-P7e" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.3" id="pCg-i4-RLm"/>
+                            <constraint firstItem="bl3-ep-P7e" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="zE6-bt-CxB"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="recordingNameTextField" destination="5KZ-7a-OfS" id="NaH-ps-akd"/>
+                        <outlet property="recordingTableView" destination="Ffh-OE-xCL" id="kCm-x3-BJO"/>
+                        <outlet property="startRecording" destination="wOk-Oj-nhi" id="Z4o-OR-qhe"/>
+                        <outlet property="startRecordingView" destination="bl3-ep-P7e" id="Lgt-kc-7Qg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-61.151079136690655" y="124.62311557788945"/>
+        </scene>
+    </scenes>
+</document>
