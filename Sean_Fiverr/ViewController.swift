@@ -20,13 +20,11 @@ import CoreData
 import AVFoundation
 
 
-class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDelegate, UITableViewDelegate, UITableViewDataSource  {
+class ViewController: UIViewController, AVAudioRecorderDelegate {
     
     
     //MARK: Variable Setup
     var audioRecorder : AVAudioRecorder!
-    
-    var audioPlayer: AVAudioPlayer!
     
     var recordingStarted : Bool = false
     
@@ -47,8 +45,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        recordingTableView.delegate = self
-        recordingTableView.dataSource = self
         recordingTableView.tableFooterView = UIView(frame: CGRect.zero) //only show as many cells as needed to keep UI clean
         recordingTableView.reloadData()
         startRecordingView.isHidden = true
@@ -98,7 +94,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     }
     
     
-    //MARK: Start Recording, Stop Recording, & Save Recording
+    //MARK: Record Audio & Save Audio
     
     @IBAction func startRecordingPressed(_ sender: UIButton) {
         
@@ -114,6 +110,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 
             } else {
                 numberOfRecords += 1
+                //Save Audio Path in File Manager
                 let fileName = getDirectory().appendingPathComponent("\(recordingNameTextField.text ?? "recording").m4a")
                 let settings = [AVFormatIDKey: Int(kAudioFormatMPEG4AAC), AVSampleRateKey: 12000, AVNumberOfChannelsKey: 1, AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue]
                 
@@ -135,7 +132,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             }
             
         } else {
-            //Stop the Recording and Save Recording
+            //Stop the Recording and Save To Table View
             recordingStarted = false
             audioRecorder.stop()
             audioRecorder = nil
@@ -186,28 +183,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     
     
     
-    //MARK: Setup Table View
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recordings.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let record = recordings[indexPath.row]
-        let cell = recordingTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 40.0)
-        
-        cell.textLabel?.text = record.value(forKeyPath: "name") as? String //Name of the recording from Core Data
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200
-    }
-    
-    
-    //MARK: Delete Recording From UITable, Core Data, and Directory
+    //MARK: Delete Record
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
@@ -219,13 +195,16 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             let record = recordings[indexPath.row]
             let stringRecordName = record.value(forKeyPath: "name") as? String
             
+            //delete from file manager
             deleteAudioFile("\(stringRecordName!).m4a")
             
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return
             }
             let managedContext : NSManagedObjectContext = appDelegate.persistentContainer.viewContext
+            //delete from core data
             managedContext.delete(recordings[indexPath.row] as NSManagedObject)
+            //delete fromt table view
             recordings.remove(at: indexPath.row)
             
             recordingTableView.beginUpdates()
@@ -234,7 +213,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             
             
             do{
-                
+                //save deletion
                 try managedContext.save()
             } catch {
                 print("error couldn't save deletion")
@@ -245,7 +224,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     func deleteAudioFile(_ string: String) {
         let fileName = getDirectory().appendingPathComponent(string)
         
-        
         do {
             try FileManager.default.removeItem(at: fileName)
             print("items deleted")
@@ -254,43 +232,42 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         }
     }
     
-    //MARK: Play Audio From TableView
+}
+
+//MARK: Setup Table View
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return recordings.count
+    }
     
-    //Play Audio From Cell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let record = recordings[indexPath.row]
+        let cell = recordingTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? RecordTableViewCell
+        
+        cell?.recordingLabel.font = UIFont.systemFont(ofSize: 40.0)
+        cell?.recordingLabel.text = record.value(forKeyPath: "name") as? String //Name of the recording from Core Data
+        return cell!
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 200
+    }
+    
+    //goToPLay View Controller
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        stopAudioPlayer()
         
-        let cell = recordingTableView.cellForRow(at: indexPath)
-        let cellContents = cell?.textLabel?.text
+        let vc = storyboard?.instantiateViewController(withIdentifier: "PlayViewController") as? PlayViewController
         
-        let audioFilename = getDirectory().appendingPathComponent("\(cellContents!).m4a")
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: audioFilename)
-            print(audioFilename)
-            audioPlayer.delegate = self
-            audioPlayer.prepareToPlay()
-            audioPlayer.volume = 3.0
-        } catch {
-            print(error)
-        }
+        let record = recordings[indexPath.row]
+        let stringRecordName = record.value(forKeyPath: "name") as? String
         
-        startAudioPlayer()
-    }
-    
-    
-    //MARK: Prepare for Playing
-    
-    func stopAudioPlayer() {
-        if audioPlayer != nil {
-            audioPlayer.stop()
-        }
-    }
-    
-    func startAudioPlayer() {
-        if audioPlayer != nil {
-            audioPlayer.play()
-        }
+        vc?.label = stringRecordName!
+        
+        self.navigationController?.pushViewController(vc!, animated: true)
+        
         
     }
-    
+
 }
